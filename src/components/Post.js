@@ -26,7 +26,7 @@ const Post = ({ post }) => {
   const navigate = useNavigate()
   let liked = user ? post.likedBy[`${user.uid}`] : false
   let star = user ? post.star : false
-  const { showModal, setShowModal, setCurrentPost } = usePost()
+  const { showModal, setShowModal, setCurrentPost, loading, setLoading } = usePost()
   const [comments, setComments] = useState([])
 
   useEffect(() => {
@@ -90,10 +90,10 @@ const Post = ({ post }) => {
     setCurrentPost(post)
     navigate(`/p/${post.username}/${post.id}`)
   }
-
+  console.log(loading)
   return (
     <>
-      <div onClick={(e) => handleClickPost(e)} className="w-full max-w-xl p-6 mb-4 bg-white border border-[#dbdbdb] rounded-lg hover:cursor-pointer hover:scale-105 transition duration-300 ease-in-out">
+      <div onClick={(e) => handleClickPost(e)} className={`${loading ? 'hidden' : 'block'} w-full max-w-xl p-6 mb-4 bg-white border border-[#dbdbdb] rounded-lg hover:cursor-pointer transition duration-300 ease-in-out`}>
         <div className='flex'>
           <div className="min-w-[48px] mr-6 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-100 border border-gray-200 rounded-full">
             <span className="text-lg text-gray-600">{post.email[0].toUpperCase()}</span>
@@ -105,7 +105,7 @@ const Post = ({ post }) => {
               <p className='text-[15px] text-zinc-600 inline font-medium'>{timeSince(post.timestamp)}</p>
             </div>
             {post.text ? <p className="pt-2 text-[15px] text-slate-900">{post.text} </p> : null}
-            {post.image ? <img src={post.image} className='mt-4 rounded-lg w-full' alt='upload' /> : null}
+            {post.image ? <img onLoad={() => setLoading(false)} src={post.image} className='mt-4 rounded-lg w-full' alt='upload' /> : null}
             <div className='mt-4'>
               <span className='group'>
                 <svg onClick={(e) => handleClickLike(e)} xmlns="http://www.w3.org/2000/svg" fill={liked ? 'currentColor' : 'none'} viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${liked ? 'text-[#FA1A7F]' : 'text-zinc-600'} w-5 h-5 align-text-bottom inline hover:text-[#FA1A7F] hover:cursor-pointer group-hover:text-[#FA1A7F]`}>

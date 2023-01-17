@@ -8,8 +8,9 @@ export const PostContextProvider = ({ children }) => {
   const [currentPost, setCurrentPost] = useState()
   const [posts, setPosts] = useState([])
   const [lastKey, setLastKey] = useState()
-  const [nextPosts_loading, setNextPostsLoading] = useState(false)
+  const [nextPostsLoading, setNextPostsLoading] = useState(false)
 
+  const [loading, setLoading] = useState(true)
   return (
     <PostContext.Provider value={{
       imageUpload,
@@ -20,10 +21,12 @@ export const PostContextProvider = ({ children }) => {
       setPosts,
       lastKey,
       setLastKey,
-      nextPosts_loading,
+      nextPostsLoading,
       setNextPostsLoading,
       currentPost,
-      setCurrentPost
+      setCurrentPost,
+      loading,
+      setLoading
     }}>
       {children}
     </PostContext.Provider>
