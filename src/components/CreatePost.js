@@ -9,6 +9,7 @@ import {
   getDownloadURL,
 } from "firebase/storage"
 import { storage } from "../firebase"
+import { v4 } from 'uuid'
 
 const CreatePost = ({ postID }) => {
   const { user } = useAuth()
@@ -57,7 +58,7 @@ const CreatePost = ({ postID }) => {
   const handleChange = (image) => {
     if (image) {
       setImageUpload(image)
-      const imageRef = ref(storage, `images/${user.uid}-${text}`);
+      const imageRef = ref(storage, `images/${image.name}-${v4()}`);
       uploadBytes(imageRef, image).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
           setUrl(url)

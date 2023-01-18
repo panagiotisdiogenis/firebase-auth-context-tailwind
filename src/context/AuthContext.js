@@ -17,7 +17,7 @@ export const AuthContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   const signup = (email, password, username) => {
-    return createUserWithEmailAndPassword(auth, email, password, username)
+    return createUserWithEmailAndPassword(auth, email, password)
       .then(async (userCredential) => {
         sendEmailVerification(auth.currentUser)
         const ref = doc(db, 'users', userCredential.user.uid)

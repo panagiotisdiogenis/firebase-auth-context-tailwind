@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { query, where, getDocs, onSnapshot, collection, orderBy, limit, startAfter } from "firebase/firestore"
 import { db } from '../firebase'
 import { useAuth } from '../context/AuthContext'
@@ -7,6 +7,7 @@ import { usePost } from '../context/PostContext'
 import CreatePost from './CreatePost'
 import Post from './Post'
 import Modal from './Modal'
+import Loader from './Loader'
 
 const Profile = () => {
   const navigate = useNavigate()
@@ -23,6 +24,21 @@ const Profile = () => {
     currentUser,
     setCurrentUser
   } = usePost()
+
+  const [count, setCount] = useState(0)
+  const [loading, setLoading] = useState(false)
+
+  // set loader if images are still loading
+  useEffect(() => {
+    setLoading(true)
+    let imageCount = 0
+    posts.forEach((post) => {
+      if (post.image) imageCount++
+    })
+    if (count >= imageCount) {
+      setLoading(false)
+    }
+  }, [count, posts])
 
   // validate if the user in the url requested exists, otherwise redirect to /404
   useEffect(() => {
@@ -101,18 +117,28 @@ const Profile = () => {
           </div>
         </div>
         {user && user.username === username ? <CreatePost /> : null}
-        {posts.length !== 0 ? posts.map((post) => <Post post={post} key={post.id} />) : null}
-          <div className='m-4'>
-            {nextPostsLoading ?
-              <p>Loading...</p>
-              :
-              <button onClick={() => fetchMorePosts(lastKey)} className="text-gray-900 bg-white text-sm border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 rounded-full p-4">
-                {lastKey ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                </svg> : <span className='px-2'>You are up to date!</span>}
-              </button>
-            }
-          </div>
+        <div className='hidden'>
+          {posts.map((post) => <img alt='' key={post.id} src={post.image} onLoad={() => setCount(prev => prev + 1)} />)}
+        </div>
+        {loading ?
+        <div className='mt-8'><Loader /></div>
+        :
+          <>
+            {posts.length !== 0 ? posts.map((post) => <Post post={post} key={post.id} />) : null}
+            <div className='m-4'>
+              {nextPostsLoading ?
+                <p>Loading...</p>
+                :
+                <button onClick={() => fetchMorePosts(lastKey)} className="text-gray-900 bg-white text-sm border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 rounded-full p-4">
+                  {lastKey ? <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                  </svg> : <span className='px-2'>You are up to date!</span>}
+                </button>
+              }
+            </div>
+          </>
+        }
+
       </div>
       {showModal ? <Modal /> : null}
     </div>
