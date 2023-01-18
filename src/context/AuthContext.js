@@ -23,6 +23,7 @@ export const AuthContextProvider = ({ children }) => {
         const ref = doc(db, 'users', userCredential.user.uid)
         await setDoc(ref, {
           createdAt: userCredential.user.metadata.creationTime,
+          emailVerified: userCredential.user.emailVerified,
           email: userCredential.user.email,
           username
         })
@@ -30,7 +31,6 @@ export const AuthContextProvider = ({ children }) => {
   }
 
 const signin = (email, password) => signInWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
-  console.log(userCredential)
   if (userCredential.user.emailVerified) {
     const ref = doc(db, 'users', userCredential.user.uid)
     await updateDoc(ref, { emailVerified: userCredential.user.emailVerified })

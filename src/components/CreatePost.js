@@ -34,6 +34,7 @@ const CreatePost = ({ postID }) => {
         uid: user.uid,
         email: user.email,
         username: user.username,
+        emailVerified: user.emailVerified,
         timestamp: new Date(),
         createdAt: serverTimestamp()
       }

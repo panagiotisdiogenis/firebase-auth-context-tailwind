@@ -1,15 +1,18 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { usePost } from '../context/PostContext'
 
 const Account = () => {
 
   const navigate = useNavigate()
   const { user, logout, setUser } = useAuth()
+  const { setPosts } = usePost()
 
   const handleLogout = async () => {
     try {
       await logout()
       setUser(null)
+      setPosts([])
       navigate('/')
       console.log('You are logged out')
     } catch (e) {

@@ -9,7 +9,7 @@ export const PostContextProvider = ({ children }) => {
   const [posts, setPosts] = useState([])
   const [lastKey, setLastKey] = useState()
   const [nextPostsLoading, setNextPostsLoading] = useState(false)
-  const [currentUser, setCurrentUser] = useState()
+  const [requestedUser, setRequestedUser] = useState()
 
   return (
     <PostContext.Provider value={{
@@ -25,8 +25,8 @@ export const PostContextProvider = ({ children }) => {
       setNextPostsLoading,
       currentPost,
       setCurrentPost,
-      currentUser,
-      setCurrentUser
+      requestedUser,
+      setRequestedUser
     }}>
       {children}
     </PostContext.Provider>

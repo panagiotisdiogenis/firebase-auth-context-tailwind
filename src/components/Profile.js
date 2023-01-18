@@ -21,8 +21,8 @@ const Profile = () => {
     nextPostsLoading,
     setNextPostsLoading,
     showModal,
-    currentUser,
-    setCurrentUser
+    requestedUser,
+    setRequestedUser
   } = usePost()
 
   const [count, setCount] = useState(0)
@@ -47,10 +47,10 @@ const Profile = () => {
     const unsubscribeUser = onSnapshot(q, snapshot => {
       const snap = snapshot.docs.map(doc => ({ ...doc.data(), uid: doc.id }))[0]
       if (!snap) navigate('/404')
-      setCurrentUser(snap)
+      setRequestedUser(snap)
     })
     return () => unsubscribeUser()
-  }, [username, navigate, setCurrentUser])
+  }, [username, navigate, setRequestedUser])
 
   // fetch first batch of posts
   useEffect(() => {
@@ -83,9 +83,9 @@ const Profile = () => {
     }
   }
 
-  if (!currentUser) return null
+  if (!requestedUser) return null
 
-  let createdAt = currentUser.createdAt.split(' ')
+  let createdAt = requestedUser.createdAt.split(' ')
   let joined = `Joined ${createdAt[2]} ${createdAt[3]}`
 
   return (
@@ -98,7 +98,7 @@ const Profile = () => {
             </button>
               : null}
             <div className="relative inline-flex items-center justify-center w-32 h-32  bg-gray-100 border border-[#dbdbdb] shadow-xs rounded-full">
-              <span className="text-2xl text-gray-600">{currentUser.email[0].toUpperCase()}</span>
+              <span className="text-2xl text-gray-600">{requestedUser.email[0].toUpperCase()}</span>
               {user && user.username === username ?
                 <span className="flex absolute h-3 w-3 bottom-3 right-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -106,8 +106,8 @@ const Profile = () => {
                 </span>
                 : null}
             </div>
-            <div className="mt-4 font-bold text-xl text-slate-900">@{currentUser.username}</div>
-            <div className="text-sm text-zinc-600">{currentUser.email}</div>
+            <div className="mt-4 font-bold text-xl text-slate-900">@{requestedUser.username}</div>
+            <div className="text-sm text-zinc-600">{requestedUser.email}</div>
             <div className="mt-4 text-sm text-zinc-600">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 align-text-bottom text-zinc-600 mr-[4px] inline">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
