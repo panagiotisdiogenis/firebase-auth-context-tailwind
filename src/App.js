@@ -25,7 +25,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path='/p/:username' element={<Profile />} />
+          <Route caseSensitive path='/p/:username' element={<Profile />} />
           <Route path='/p/:username/:postid' element={<Status />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/404' element={<NotFound />} />

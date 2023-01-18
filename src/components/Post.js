@@ -26,7 +26,7 @@ const Post = ({ post }) => {
   const navigate = useNavigate()
   let liked = user ? post.likedBy[`${user.uid}`] : false
   let star = user ? post.star : false
-  const { showModal, setShowModal, setCurrentPost, loading, setLoading } = usePost()
+  const { showModal, setShowModal, setCurrentPost, currentUser } = usePost()
   const [comments, setComments] = useState([])
 
   useEffect(() => {
@@ -90,10 +90,10 @@ const Post = ({ post }) => {
     setCurrentPost(post)
     navigate(`/p/${post.username}/${post.id}`)
   }
-  console.log(loading)
+
   return (
     <>
-      <div onClick={(e) => handleClickPost(e)} className={`${loading ? 'hidden' : 'block'} w-full max-w-xl p-6 mb-4 bg-white border border-[#dbdbdb] rounded-lg hover:cursor-pointer transition duration-300 ease-in-out`}>
+      <div onClick={(e) => handleClickPost(e)} className={`w-full max-w-xl p-6 mb-4 bg-white border border-[#dbdbdb] rounded-lg hover:cursor-pointer transition duration-300 ease-in-out`}>
         <div className='flex'>
           <div className="min-w-[48px] mr-6 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-100 border border-gray-200 rounded-full">
             <span className="text-lg text-gray-600">{post.email[0].toUpperCase()}</span>
@@ -101,11 +101,16 @@ const Post = ({ post }) => {
           <div className=''>
             <div>
               <p className='text-[15px] text-slate-900 inline font-bold'>@{post.username} </p>
+              {currentUser.emailVerified ?
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-[#1D9CEF] align-text-top mr-[4px] inline">
+                  <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+                </svg>
+                : null}
               <p className='text-[15px] text-zinc-600 inline font-medium'>{post.email} · </p>
               <p className='text-[15px] text-zinc-600 inline font-medium'>{timeSince(post.timestamp)}</p>
             </div>
             {post.text ? <p className="pt-2 text-[15px] text-slate-900">{post.text} </p> : null}
-            {post.image ? <img onLoad={() => setLoading(false)} src={post.image} className='mt-4 rounded-lg w-full' alt='upload' /> : null}
+            {post.image ? <img src={post.image} className='mt-4 rounded-lg w-full' alt='upload' /> : null}
             <div className='mt-4'>
               <span className='group'>
                 <svg onClick={(e) => handleClickLike(e)} xmlns="http://www.w3.org/2000/svg" fill={liked ? 'currentColor' : 'none'} viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={`${liked ? 'text-[#FA1A7F]' : 'text-zinc-600'} w-5 h-5 align-text-bottom inline hover:text-[#FA1A7F] hover:cursor-pointer group-hover:text-[#FA1A7F]`}>

@@ -3,14 +3,14 @@ import { createContext, useContext, useState } from 'react'
 const PostContext = createContext()
 
 export const PostContextProvider = ({ children }) => {
-  const [imageUpload, setImageUpload] = useState()
+  const [imageUpload, setImageUpload] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [currentPost, setCurrentPost] = useState()
   const [posts, setPosts] = useState([])
   const [lastKey, setLastKey] = useState()
   const [nextPostsLoading, setNextPostsLoading] = useState(false)
+  const [currentUser, setCurrentUser] = useState()
 
-  const [loading, setLoading] = useState(true)
   return (
     <PostContext.Provider value={{
       imageUpload,
@@ -25,8 +25,8 @@ export const PostContextProvider = ({ children }) => {
       setNextPostsLoading,
       currentPost,
       setCurrentPost,
-      loading,
-      setLoading
+      currentUser,
+      setCurrentUser
     }}>
       {children}
     </PostContext.Provider>

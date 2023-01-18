@@ -18,7 +18,9 @@ const CreatePost = ({ postID }) => {
   const { imageUpload, setImageUpload } = usePost()
   const { setShowModal } = usePost()
 
-  const handleClick = async () => {
+  const [url, setUrl] = useState('')
+
+  const handleCreatePost = async () => {
 
     if (text || imageUpload) {
 
@@ -39,32 +41,34 @@ const CreatePost = ({ postID }) => {
         newPost['postID'] = postID
       }
 
-      if (imageUpload) {
-        const imageRef = ref(storage, `images/${user.uid}-${text}`);
-
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
-          getDownloadURL(snapshot.ref).then(async (url) => {
-            await addDoc(postsRef, { ...newPost, image: url })
-              .then(() => {
-                setText('')
-                setImageUpload('')
-                hiddenFileInput.current.value = ''
-              })
-              .catch((err) => console.log(err))
-          })
+      await addDoc(postsRef, { ...newPost, image: url })
+        .then(() => {
+          setText('')
+          setImageUpload('')
+          setUrl('')
+          hiddenFileInput.current.value = ''
         })
-      }
-      else {
-        await addDoc(postsRef, newPost)
-          .then(() => {
-            setText('')
-            setImageUpload('')
-            hiddenFileInput.current.value = ''
-          })
-          .catch((err) => console.log(err))
-      }
+        .catch((err) => console.log(err))
+
       setShowModal(false)
     }
+  }
+
+  const handleChange = (image) => {
+    if (image) {
+      setImageUpload(image)
+      const imageRef = ref(storage, `images/${user.uid}-${text}`);
+      uploadBytes(imageRef, image).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((url) => {
+          setUrl(url)
+        })
+      })
+    }
+  }
+
+  const handleRemoveImageUpload = () => {
+    setImageUpload('')
+    setUrl('')
   }
 
   return (
@@ -82,7 +86,7 @@ const CreatePost = ({ postID }) => {
             </button>
             {imageUpload ?
               <label htmlFor="hell" className='bg-pink-100 text-pink-800 text-xs font-medium ml-2 px-4 py-0 my-[2px] rounded-full flex justify-center items-center max-w-[200px]'>
-                <svg onClick={() => setImageUpload(null)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 mr-2 text-pink-800 hover:cursor-pointer">
+                <svg onClick={handleRemoveImageUpload} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 mr-2 text-pink-800 hover:cursor-pointer">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 {imageUpload ? imageUpload.name.replace(/(.{14})..+/, "$1…") : null}
@@ -93,10 +97,10 @@ const CreatePost = ({ postID }) => {
               accept="image/*"
               ref={hiddenFileInput}
               className='hidden'
-              onChange={(e) => setImageUpload(e.target.files[0])}
+              onChange={(e) => handleChange(e.target.files[0])}
             />
           </div>
-          <button onClick={handleClick} type="button" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-[#0F1419] hover:bg-[#333] rounded-full focus:ring-4 focus:ring-gray-300">
+          <button onClick={handleCreatePost} type="button" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-[#0F1419] hover:bg-[#333] rounded-full focus:ring-4 focus:ring-gray-300">
             Create Post
           </button>
         </div>
