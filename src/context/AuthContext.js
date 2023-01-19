@@ -54,14 +54,22 @@ export const AuthContextProvider = ({ children }) => {
     return unsubscribe
   }, [])
 
-  const [theme, setTheme] = useState(null)
+  const [theme, setTheme] = useState()
+
+  useEffect(() => {
+    if (!('theme' in localStorage)) {
+      localStorage.theme = 'dark'
+      setTheme('dark')
+    }
+  }, [])
 
   useEffect(() => {
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      localStorage.theme = 'dark'
+      setTheme('dark')
       document.documentElement.classList.add('dark')
       document.body.style.backgroundColor = '#111'
     } else {
+      setTheme('light')
       document.documentElement.classList.remove('dark')
       document.body.style.backgroundColor = '#fafafa'
     }
