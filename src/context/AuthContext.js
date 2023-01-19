@@ -30,60 +30,58 @@ export const AuthContextProvider = ({ children }) => {
       })
   }
 
-const signin = (email, password) => signInWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
-  if (userCredential.user.emailVerified) {
-    const ref = doc(db, 'users', userCredential.user.uid)
-    await updateDoc(ref, { emailVerified: userCredential.user.emailVerified })
-  }
-})
-
-const resetPassword = (email) => sendPasswordResetEmail(auth, email)
-
-const logout = () => signOut(auth)
-
-useEffect(() => {
-  const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-    if (currentUser) {
-      const ref = doc(db, 'users', currentUser.uid)
-      const snapshot = await getDoc(ref)
-      setUser({ ...snapshot.data(), uid: currentUser.uid })
+  const signin = (email, password) => signInWithEmailAndPassword(auth, email, password).then(async (userCredential) => {
+    if (userCredential.user.emailVerified) {
+      const ref = doc(db, 'users', userCredential.user.uid)
+      await updateDoc(ref, { emailVerified: userCredential.user.emailVerified })
     }
-    setLoading(false)
   })
 
-  return unsubscribe
-}, [])
+  const resetPassword = (email) => sendPasswordResetEmail(auth, email)
 
-const [theme, setTheme] = useState(null)
+  const logout = () => signOut(auth)
 
-useEffect(() => {
-  if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-    setTheme('dark')
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        const ref = doc(db, 'users', currentUser.uid)
+        const snapshot = await getDoc(ref)
+        setUser({ ...snapshot.data(), uid: currentUser.uid })
+      }
+      setLoading(false)
+    })
+
+    return unsubscribe
+  }, [])
+
+  const [theme, setTheme] = useState(null)
+
+  useEffect(() => {
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      localStorage.theme = 'dark'
+      document.documentElement.classList.add('dark')
+      document.body.style.backgroundColor = '#111'
+    } else {
+      document.documentElement.classList.remove('dark')
+      document.body.style.backgroundColor = '#fafafa'
+    }
+  }, [theme])
+
+  const handleThemeSwitch = () => {
+    if (theme === 'dark') {
+      setTheme('light')
+      localStorage.theme = 'light'
+    } else {
+      setTheme('dark')
+      localStorage.theme = 'dark'
+    }
   }
-  else {
-    setTheme('light')
-  }
-}, [])
 
-useEffect(() => {
-  if (theme === "dark") {
-    document.documentElement.classList.add('dark')
-    document.body.style.backgroundColor = '#111'
-  } else {
-    document.documentElement.classList.remove('dark')
-    document.body.style.backgroundColor = '#fafafa'
-  }
-}, [theme])
-
-const handleThemeSwitch = () => {
-  setTheme(theme === "dark" ? "light" : "dark")
-}
-
-return (
-  <AuthContext.Provider value={{ loading, setUser, setLoading, logout, resetPassword, signup, signin, user, handleThemeSwitch, theme }}>
-    {!loading && children}
-  </AuthContext.Provider>
-)
+  return (
+    <AuthContext.Provider value={{ loading, setUser, setLoading, logout, resetPassword, signup, signin, user, handleThemeSwitch, theme }}>
+      {!loading && children}
+    </AuthContext.Provider>
+  )
 }
 
 export const useAuth = () => useContext(AuthContext)
