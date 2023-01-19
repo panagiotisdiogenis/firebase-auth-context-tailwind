@@ -54,8 +54,33 @@ useEffect(() => {
   return unsubscribe
 }, [])
 
+const [theme, setTheme] = useState(null)
+
+useEffect(() => {
+  if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+    setTheme('dark')
+  }
+  else {
+    setTheme('light')
+  }
+}, [])
+
+useEffect(() => {
+  if (theme === "dark") {
+    document.documentElement.classList.add('dark')
+    document.body.style.backgroundColor = '#111'
+  } else {
+    document.documentElement.classList.remove('dark')
+    document.body.style.backgroundColor = '#fafafa'
+  }
+}, [theme])
+
+const handleThemeSwitch = () => {
+  setTheme(theme === "dark" ? "light" : "dark")
+}
+
 return (
-  <AuthContext.Provider value={{ loading, setUser, setLoading, logout, resetPassword, signup, signin, user }}>
+  <AuthContext.Provider value={{ loading, setUser, setLoading, logout, resetPassword, signup, signin, user, handleThemeSwitch, theme }}>
     {!loading && children}
   </AuthContext.Provider>
 )
