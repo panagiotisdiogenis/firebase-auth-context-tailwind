@@ -49,7 +49,7 @@ const CreatePost = ({ postID }) => {
       }
 
       setShowModal(false)
-      
+
       await addDoc(postsRef, { ...newPost, image: url })
         .then(() => {
           setText('')
@@ -82,15 +82,15 @@ const CreatePost = ({ postID }) => {
 
   return (
     <form className='w-full max-w-xl mb-4'>
-      <div className="border border-[#dbdbdb] rounded-lg bg-gray-50 dark:bg-black dark:border-[#333]">
-        <div className="p-6 pb-0 bg-white rounded-t-lg dark:bg-black">
+      <div className="border border-[#dbdbdb] rounded-xl bg-gray-50 dark:bg-black dark:border-[#333]">
+        <div className="p-6 sm:p-8 pb-0 bg-white rounded-t-lg dark:bg-black">
           <label htmlFor="comment" className="sr-only">Your comment</label>
           <textarea id="comment" maxLength="280" value={text} onChange={(e) => setText(e.target.value)} rows="4" className="w-full p-4 outline-none resize-none text-xl text-gray-900 bg-white border-0 focus:ring-0 dark:bg-black dark:text-white placeholder-[#71767A]" placeholder={`${currentPost ? 'Add a comment...' : "What's happening?"}`} required></textarea>
-          <div className='overflow-y-scroll max-h-64 rounded-lg'>
-            {imageUpload ? <img src={URL.createObjectURL(imageUpload)} className='w-full rounded-lg' alt='preview' /> : null}
+          <div className='overflow-y-scroll max-h-64 rounded-xl'>
+            {imageUpload ? <img src={URL.createObjectURL(imageUpload)} className='w-full rounded-xl' alt='preview' /> : null}
           </div>
         </div>
-        <div className="flex items-center justify-between bg-white rounded-lg px-6 py-6 border-[#dbdbdb] dark:bg-black dark:border-[#333]">
+        <div className="flex items-center justify-between bg-white rounded-xl p-6 sm:p-8 border-[#dbdbdb] dark:bg-black dark:border-[#333]">
           <div className="flex pl-0 space-x-2">
             <button onClick={() => hiddenFileInput.current.click()} type="button" className="inline-flex justify-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-[#111] dark:hover:text-white">
               <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd"></path></svg>
