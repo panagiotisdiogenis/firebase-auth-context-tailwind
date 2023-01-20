@@ -106,8 +106,8 @@ const CreatePost = ({ postID }) => {
               onChange={(e) => handleChange(e.target.files[0])}
             />
           </div>
-          <button disabled={imageUpload && url === '' ? true : false} onClick={handleCreatePost} type="button" className="disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-[#0F1419] hover:bg-[#333] rounded-full focus:ring-4 focus:ring-gray-300 dark:bg-black dark:border-[1px] dark:border-[#333] dark:hover:bg-[#111] dark:focus:ring-0">
-            Create Post
+          <button disabled={imageUpload && url === '' ? true : false} onClick={handleCreatePost} type="button" className="disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center py-2 px-4 text-xs font-medium text-center text-white bg-[#0F1419] hover:bg-[#333] rounded-full focus:ring-4 focus:ring-gray-300 dark:bg-black dark:border-[1px] dark:border-[#333] dark:hover:bg-[#111] dark:focus:ring-0">
+            Post
           </button>
         </div>
       </div>
