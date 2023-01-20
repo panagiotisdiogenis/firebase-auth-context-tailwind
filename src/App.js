@@ -9,6 +9,7 @@ import NotFound from './components/NotFound'
 import Signin from './components/Signin'
 import Signup from './components/Signup'
 import Status from './components/Status'
+// import Nav from './components/Nav'
 
 function App() {
   return (
