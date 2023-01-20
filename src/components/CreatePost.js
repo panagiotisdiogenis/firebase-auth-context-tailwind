@@ -83,9 +83,9 @@ const CreatePost = ({ postID }) => {
   return (
     <form className='w-full max-w-xl mb-4'>
       <div className="border border-[#dbdbdb] rounded-xl bg-gray-50 dark:bg-black dark:border-[#333]">
-        <div className="p-6 sm:p-8 pb-0 bg-white rounded-t-lg dark:bg-black">
+        <div className="p-6 sm:p-8 pb-0 bg-white rounded-t-xl dark:bg-black">
           <label htmlFor="comment" className="sr-only">Your comment</label>
-          <textarea id="comment" maxLength="280" value={text} onChange={(e) => setText(e.target.value)} rows="4" className="w-full p-4 outline-none resize-none text-xl text-gray-900 bg-white border-0 focus:ring-0 dark:bg-black dark:text-white placeholder-[#71767A]" placeholder={`${currentPost ? 'Add a comment...' : "What's happening?"}`} required></textarea>
+          <textarea id="comment" autoFocus maxLength="280" value={text} onChange={(e) => setText(e.target.value)} rows="4" className="w-full p-4 outline-none resize-none text-xl text-gray-900 bg-white border-0 focus:ring-0 dark:bg-black dark:text-white placeholder-[#71767A]" placeholder={`${currentPost ? 'Add a comment...' : "What's happening?"}`} required></textarea>
           <div className='overflow-y-scroll max-h-64 rounded-xl'>
             {imageUpload ? <img src={URL.createObjectURL(imageUpload)} className='w-full rounded-xl' alt='preview' /> : null}
           </div>
