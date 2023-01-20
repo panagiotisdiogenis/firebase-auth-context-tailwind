@@ -7,6 +7,7 @@ import { usePost } from '../context/PostContext'
 import Post from './Post'
 import Modal from './Modal'
 import Loader from './Loader'
+// import Nav from './Nav'
 
 const Profile = () => {
   const navigate = useNavigate()
@@ -95,24 +96,29 @@ const Profile = () => {
   let joined = `Joined ${createdAt[2]} ${createdAt[3]}`
 
   return (
+    <>
+    {/*<Nav />
+    <div className='mt-12'></div>*/}
     <div className="mx-auto bg-gray-50 h-auto dark:bg-[#111]">
       <div className='flex flex-col items-center px-4 py-6'>
         <div className="w-full max-w-xl bg-white border border-[#dbdbdb] rounded-lg mb-4 dark:bg-black dark:border-[#333]">
-          <div className="flex flex-col p-10 relative">
-            {user && user.username === username ? <button onClick={() => navigate('/account')} className="absolute m-10 top-0 right-0 text-gray-900 bg-white text-sm border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-full p-2 dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-[#111]">
+          <div className="flex flex-col p-6 sm:p-10 relative">
+            {user.username === username ?
+            <button onClick={() => navigate('/account')} className="absolute m-6 sm:m-10 top-0 right-0 text-gray-900 bg-white text-sm border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-full p-2 dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-[#111]">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z" />
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </button>
               : null}
-            {user && user.username === username ? <button onClick={handleClickPost} className="absolute m-10 bottom-0 right-0 text-gray-900 bg-white text-lg border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-full px-8 py-2 dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-[#111]">
+            {user.username === username ?
+            <button onClick={handleClickPost} className="absolute m-6 sm:m-10 bottom-0 right-0 text-gray-900 bg-white text-sm sm:text-lg border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-full px-8 py-2 dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-[#111]">
               Create
             </button>
               : null}
             <div className="relative inline-flex items-center justify-center w-32 h-32  bg-gray-100 border border-[#dbdbdb] shadow-xs rounded-full dark:bg-[#111] dark:border-[#333]">
               <span className="text-2xl text-gray-600 dark:text-white">{requestedUser.email[0].toUpperCase()}</span>
-              {user && user.username === username ?
+              {user.username === username ?
                 <span className="flex absolute h-3 w-3 bottom-3 right-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
@@ -129,9 +135,7 @@ const Profile = () => {
             </div>
           </div>
         </div>
-        <div className='hidden'>
-          {posts.map((post) => <img alt='' key={post.id} src={post.image} onLoad={() => setCount(prev => prev + 1)} />)}
-        </div>
+        <div className='hidden'>{posts.map((post) => <img alt='' key={post.id} src={post.image} onLoad={() => setCount(prev => prev + 1)} />)}</div>
         {loading ?
           <div className='mt-8'><Loader /></div>
           :
@@ -150,10 +154,10 @@ const Profile = () => {
             </div>
           </>
         }
-
       </div>
       {showModal ? <Modal /> : null}
     </div>
+    </>
   )
 }
 

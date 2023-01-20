@@ -48,6 +48,8 @@ const CreatePost = ({ postID }) => {
         newPost['postID'] = postID
       }
 
+      setShowModal(false)
+      
       await addDoc(postsRef, { ...newPost, image: url })
         .then(() => {
           setText('')
@@ -57,7 +59,6 @@ const CreatePost = ({ postID }) => {
         })
         .catch((err) => console.log(err))
 
-      setShowModal(false)
     }
   }
 
