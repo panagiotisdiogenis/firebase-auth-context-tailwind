@@ -17,7 +17,7 @@ const Modal = () => {
   }
   return (
     <>
-      <div className="opacity-40 fixed inset-0 z-40 bg-black"></div>
+      <div className="opacity-40 fixed inset-0 z-40 bg-[#333]"></div>
       <div id="popup-modal" tabIndex="-1" className="fixed flex mx-auto justify-center items-center top-0 left-0 right-0 z-50 p-4 overflow-x-hidden overflow-y-auto inset-0 h-modal h-full">
         <div className="relative w-full h-full max-w-lg h-auto">
           <div className='relative'>
