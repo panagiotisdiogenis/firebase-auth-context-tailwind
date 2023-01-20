@@ -13,11 +13,15 @@ import { v4 } from 'uuid'
 
 const CreatePost = ({ postID }) => {
   const { user } = useAuth()
-  const [text, setText] = useState('')
   const hiddenFileInput = useRef()
   const postsRef = collection(db, 'posts')
-  const { imageUpload, setImageUpload } = usePost()
   const { setShowModal } = usePost()
+  const { 
+    imageUpload,
+    setImageUpload,
+    text,
+    setText
+  } = usePost()
 
   const [url, setUrl] = useState('')
 
@@ -102,7 +106,7 @@ const CreatePost = ({ postID }) => {
               onChange={(e) => handleChange(e.target.files[0])}
             />
           </div>
-          <button onClick={handleCreatePost} type="button" className="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-[#0F1419] hover:bg-[#333] rounded-full focus:ring-4 focus:ring-gray-300 dark:bg-black dark:border-[1px] dark:border-[#333] dark:hover:bg-[#111] dark:focus:ring-0">
+          <button disabled={imageUpload && url === '' ? true : false} onClick={handleCreatePost} type="button" className="disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-[#0F1419] hover:bg-[#333] rounded-full focus:ring-4 focus:ring-gray-300 dark:bg-black dark:border-[1px] dark:border-[#333] dark:hover:bg-[#111] dark:focus:ring-0">
             Create Post
           </button>
         </div>
