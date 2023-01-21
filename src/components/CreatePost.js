@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from '../firebase'
 import { useAuth } from '../context/AuthContext'
 import { usePost } from '../context/PostContext'
@@ -40,8 +40,7 @@ const CreatePost = ({ postID }) => {
         email: user.email,
         username: user.username,
         emailVerified: user.emailVerified,
-        timestamp: new Date(),
-        createdAt: serverTimestamp()
+        createdAt: new Date()
       }
 
       if (postID) {

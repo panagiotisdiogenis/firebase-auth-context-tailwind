@@ -7,7 +7,7 @@ const Modal = () => {
     setShowModal,
     currentPost,
     setText,
-    setImageUpload
+    setImageUpload,
   } = usePost()
 
   const handleModalExit = () => {
@@ -15,6 +15,7 @@ const Modal = () => {
     setImageUpload('')
     setShowModal(!showModal)
   }
+
   return (
     <>
       <div className="sm:opacity-40 fixed inset-0 z-40 bg-white dark:bg-black sm:bg-[#333]"></div>

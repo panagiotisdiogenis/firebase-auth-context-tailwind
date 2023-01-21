@@ -44,6 +44,7 @@ const Profile = () => {
 
   // validate if the user in the url requested exists, otherwise redirect to /404
   useEffect(() => {
+    setCurrentPost(null)
     const ref = collection(db, 'users')
     const q = query(ref, where('username', '==', username))
     const unsubscribeUser = onSnapshot(q, snapshot => {
@@ -52,7 +53,7 @@ const Profile = () => {
       setRequestedUser(snap)
     })
     return () => unsubscribeUser()
-  }, [username, navigate, setRequestedUser])
+  }, [username, navigate, setRequestedUser, setCurrentPost])
 
   // fetch first batch of posts
   useEffect(() => {

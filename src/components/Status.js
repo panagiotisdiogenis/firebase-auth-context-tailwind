@@ -9,13 +9,11 @@ import Modal from './Modal'
 
 const Status = () => {
 
+  const { showModal, currentPost, setCurrentPost } = usePost()
+  const [comments, setComments] = useState([])
   const navigate = useNavigate()
   const { postid } = useParams()
   const { username } = useAuth()
-  const { showModal } = usePost()
-  const [comments, setComments] = useState([])
-  const [currentPost, setCurrentPost] = useState()
-
 
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(db, "posts", postid), (doc) => {
@@ -29,7 +27,7 @@ const Status = () => {
     })
 
     return () => unsubscribe()
-  }, [navigate, username, postid])
+  }, [navigate, username, postid, setCurrentPost])
 
   useEffect(() => {
     const ref = collection(db, 'posts')
