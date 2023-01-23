@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { doc, updateDoc, query, where, getDocs, onSnapshot, collection, orderBy, limit, startAfter, arrayRemove, arrayUnion } from "firebase/firestore"
 import { db } from '../firebase'
@@ -65,8 +65,8 @@ const Profile = () => {
     const q = query(ref, where('username', '==', username))
     const unsubscribe = onSnapshot(q, snapshot => {
       const snap = snapshot.docs.map(doc => ({ ...doc.data(), uid: doc.id }))[0]
-      setRequestedUserFollowers(snap.followers)
-      setRequestedUserFollowing(snap.following)
+      setRequestedUserFollowers({ followers: snap.followers, uid: snap.uid })
+      setRequestedUserFollowing({ following: snap.following, uid: snap.uid })
     })
     return () => unsubscribe()
   }, [username, setRequestedUserFollowers, setRequestedUserFollowing])
@@ -134,8 +134,8 @@ const Profile = () => {
 
   return (
     <>
-    <Nav />
-    <div className='mt-[50px] sm:mt-[70px]'></div>
+      <Nav />
+      <div className='mt-[50px] sm:mt-[70px]'></div>
       <div className="mx-auto bg-gray-50 h-auto dark:bg-[#111]">
         <div className='flex flex-col items-center px-4 py-6'>
           <div className="w-full max-w-xl bg-white border border-[#dbdbdb] rounded-lg mb-4 dark:bg-black dark:border-[#333]">
@@ -162,10 +162,14 @@ const Profile = () => {
                 {getTimeJoined()}
               </div>
               <div className='mt-2'>
-                <span className="text-sm text-slate-900 font-bold dark:text-white">{requestedUserFollowing.length}</span>
-                <span className="text-sm text-zinc-600 dark:text-zinc-500 pr-2"> Following </span>
-                <span className="text-sm text-slate-900 font-bold dark:text-white">{requestedUserFollowers.length}</span>
-                <span className="text-sm text-zinc-600 dark:text-zinc-500"> Followers </span>
+                <span onClick={() => navigate(`/p/${username}/following`)} className='text-white hover:underline underline-offset-4 decoration-1 cursor-pointer'>
+                  <span className="text-xs text-slate-900 font-bold dark:text-white">{requestedUserFollowing.following.length}</span>
+                  <span className="text-sm text-zinc-600 dark:text-zinc-500 pr-2"> Following</span>
+                </span>
+                <span onClick={() => navigate(`/p/${username}/followers`)} className='text-white hover:underline underline-offset-4 decoration-1 cursor-pointer'>
+                  <span className="text-xs text-slate-900 font-bold dark:text-white">{requestedUserFollowers.followers.length}</span>
+                  <span className="text-sm text-zinc-600 dark:text-zinc-500"> Followers </span>
+                </span>
               </div>
             </div>
           </div>
@@ -190,6 +194,7 @@ const Profile = () => {
           }
         </div>
         {showModal ? <Modal /> : null}
+        <Outlet />
       </div>
     </>
   )
