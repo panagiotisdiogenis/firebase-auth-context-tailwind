@@ -41,9 +41,9 @@ const Nav = () => {
         </div>
         <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
           <ul className="hover:bg-red flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-white md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-[#111] md:dark:bg-[#111] dark:border-gray-700">
-            <li>
+            <Link to={`/p/${user.username}`}>
               <button className="block py-2 pl-3 pr-4 text-black rounded md:bg-transparent md:p-0 dark:text-white" aria-current="page">Home</button>
-            </li>
+            </Link>
             <Link to='/account'>
               <button className="block py-2 pl-3 pr-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Settings</button>
             </Link>

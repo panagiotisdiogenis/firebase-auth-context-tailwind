@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import Nav from './Nav'
 import { useAuth } from '../context/AuthContext'
 import { useFollowing } from '../context/FollowingContext'
 import { db } from '../firebase'
@@ -15,7 +16,9 @@ const Following = () => {
     requestedUserFollowers,
     requestedUserFollowing,
     setRequestedUserFollowers,
-    setRequestedUserFollowing
+    setRequestedUserFollowing,
+    setUserFollowers,
+    setUserFollowing
   } = useFollowing()
   const [users, setUsers] = useState()
 
@@ -26,6 +29,17 @@ const Following = () => {
       setUsers(requestedUserFollowers)
     }
   }, [requestedUserFollowing, requestedUserFollowers, route])
+
+  useEffect(() => {
+    const ref = collection(db, 'following')
+    const q = query(ref, where('username', '==', user.username))
+    const unsubscribe = onSnapshot(q, snapshot => {
+      const snap = snapshot.docs.map(doc => ({ ...doc.data(), uid: doc.id }))[0]
+      setUserFollowers(snap.followers)
+      setUserFollowing(snap.following)
+    })
+    return () => unsubscribe()
+  }, [user.username, setUserFollowers, setUserFollowing])
 
   useEffect(() => {
     const requestedUsername = pathname.split('/')[2]
@@ -63,38 +77,35 @@ const Following = () => {
     }
   }
 
-  if (!requestedUserFollowing || !requestedUserFollowing) return null
+  if (!userFollowing || !requestedUserFollowing || !requestedUserFollowing) return null
 
   return (
-    <div className="mx-auto bg-gray-50 h-auto h-full dark:bg-[#111]">
-      <div className='flex flex-col items-center p-4'>
-        <div className='max-w-xl w-full'>
-          <button onClick={() => navigate(-1)} className="text-gray-900 bg-white text-sm border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-full px-4 py-2 mb-4 dark:bg-black dark:border-[#333] dark:hover:bg-[#111] dark:text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 inline align-text-bottom">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-            <span className='ml-2 inline font-bold text-slate-900 dark:text-white'>Back</span>
-          </button>
-        </div>
-        {users && users[`${route}`].map((username, i) => {
-          return (
-            <div key={i} className='relative w-full max-w-xl p-6 mb-4 bg-white border border-[#dbdbdb] rounded-lg hover:cursor-pointer dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-black/50'>
-              <div className='flex justify-between'>
-                <div>
-                  <div className="min-w-[48px] mr-6 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-100 border border-gray-200 rounded-full dark:bg-[#111] dark:border-[#333]">
-                    <span className="text-lg text-gray-600 dark:text-white">{username[0].toUpperCase()}</span>
+    <>
+      <Nav />
+      <div className="mx-auto mt-[50px] sm:mt-[70px] bg-gray-50 h-auto h-full dark:bg-[#111]">
+        <div className='flex flex-col items-center px-4 py-6'>
+          <div className='max-w-xl w-full'>
+          </div>
+          {users && users[`${route}`].map((username, i) => {
+            return (
+              <div onClick={() => navigate(`/p/${username}`)} key={i} className='relative w-full max-w-xl p-6 mb-4 bg-white border border-[#dbdbdb] rounded-lg hover:cursor-pointer dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-black/50'>
+                <div className='flex justify-between'>
+                  <div>
+                    <div className="min-w-[48px] mr-6 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-100 border border-gray-200 rounded-full dark:bg-[#111] dark:border-[#333]">
+                      <span className="text-lg text-gray-600 dark:text-white">{username[0].toUpperCase()}</span>
+                    </div>
+                    <span className='text-sm sm:text-base'>@{username}</span>
                   </div>
-                  @{username}
+                  <button onClick={() => handleClickFollow(username)} className='flex items-center justify-center text-gray-900 bg-white text-sm sm:text-md border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-full px-8 py-2 dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-[#111]'>
+                    {userFollowing.includes(username) ? 'Unfollow' : 'Follow'}
+                  </button>
                 </div>
-                <button onClick={() => handleClickFollow(username)} className='flex text-gray-900 bg-white text-sm sm:text-lg border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-full px-8 py-2 dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-[#111]'>
-                  {userFollowing.includes(username) ? 'Unfollow' : 'Follow'}
-                </button>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

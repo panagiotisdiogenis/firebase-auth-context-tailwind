@@ -50,8 +50,6 @@ const Profile = () => {
   // validate if the user in the url requested exists, otherwise redirect to /404
   useEffect(() => {
     setCurrentPost(null)
-    // setRequestedUserFollowers(null)
-    // setRequestedUserFollowing(null)
     const ref = collection(db, 'users')
     const q = query(ref, where('username', '==', username))
     const unsubscribeUser = onSnapshot(q, snapshot => {
@@ -117,7 +115,7 @@ const Profile = () => {
     const requestedUserRef = doc(db, 'following', requestedUser.uid)
     const loggedInUserRef = doc(db, 'following', user.uid)
 
-    if (requestedUserFollowers.includes(user.username)) {
+    if (requestedUserFollowers.followers.includes(user.username)) {
       // delete user in requested user followers
       updateDoc(requestedUserRef, { followers: arrayRemove(user.username) })
       // delete user in logged in user following

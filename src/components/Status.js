@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext'
 import { usePost } from '../context/PostContext'
 import Post from './Post'
 import Modal from './Modal'
+import Nav from './Nav'
 
 const Status = () => {
 
@@ -43,21 +44,18 @@ const Status = () => {
   if (!currentPost) return null
 
   return (
-    <div className="mx-auto bg-gray-50 h-auto h-full dark:bg-[#111]">
-      <div className='flex flex-col items-center p-4'>
-        <div className='max-w-xl w-full'>
-          <button onClick={() => navigate(-1)} className="text-gray-900 bg-white text-sm border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-full px-4 py-2 mb-4 dark:bg-black dark:border-[#333] dark:hover:bg-[#111] dark:text-white">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4 inline align-text-bottom">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-            </svg>
-            <span className='ml-2 inline font-bold text-slate-900 dark:text-white'>Back</span>
-          </button>
+    <>
+      <Nav />
+      <div className="mx-auto mt-[50px] sm:mt-[70px] bg-gray-50 h-auto h-full dark:bg-[#111]">
+        <div className='flex flex-col items-center px-4 py-6'>
+          <div className='max-w-xl w-full'>
+          </div>
+          <Post post={currentPost} key={currentPost.id} />
+          {comments ? comments.map((post) => <Post post={post} key={post.id} />) : null}
         </div>
-        <Post post={currentPost} key={currentPost.id} />
-        {comments ? comments.map((post) => <Post post={post} key={post.id} />) : null}
+        {showModal ? <Modal /> : null}
       </div>
-      {showModal ? <Modal /> : null}
-    </div>
+    </>
   )
 }
 
