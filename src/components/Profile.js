@@ -135,7 +135,7 @@ const Profile = () => {
   return (
     <>
     <Nav />
-    <div className='mt-[48px] sm:mt-[70px]'></div>
+    <div className='mt-[50px] sm:mt-[70px]'></div>
       <div className="mx-auto bg-gray-50 h-auto dark:bg-[#111]">
         <div className='flex flex-col items-center px-4 py-6'>
           <div className="w-full max-w-xl bg-white border border-[#dbdbdb] rounded-lg mb-4 dark:bg-black dark:border-[#333]">
