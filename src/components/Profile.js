@@ -50,6 +50,8 @@ const Profile = () => {
   // validate if the user in the url requested exists, otherwise redirect to /404
   useEffect(() => {
     setCurrentPost(null)
+    setRequestedUserFollowers(null)
+    setRequestedUserFollowing(null)
     const ref = collection(db, 'users')
     const q = query(ref, where('username', '==', username))
     const unsubscribeUser = onSnapshot(q, snapshot => {
@@ -58,7 +60,7 @@ const Profile = () => {
       setRequestedUser(snap)
     })
     return () => unsubscribeUser()
-  }, [username, navigate, setRequestedUser, setCurrentPost])
+  }, [username, navigate, setRequestedUser, setCurrentPost, setRequestedUserFollowing, setRequestedUserFollowers])
 
   useEffect(() => {
     const ref = collection(db, 'following')
