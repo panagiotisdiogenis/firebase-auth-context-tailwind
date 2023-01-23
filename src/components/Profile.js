@@ -50,8 +50,6 @@ const Profile = () => {
   // validate if the user in the url requested exists, otherwise redirect to /404
   useEffect(() => {
     setCurrentPost(null)
-    setRequestedUserFollowers(null)
-    setRequestedUserFollowing(null)
     const ref = collection(db, 'users')
     const q = query(ref, where('username', '==', username))
     const unsubscribeUser = onSnapshot(q, snapshot => {
@@ -140,13 +138,13 @@ const Profile = () => {
         <div className='flex flex-col items-center px-4 py-6'>
           <div className="w-full max-w-xl bg-white border border-[#dbdbdb] rounded-lg mb-4 dark:bg-black dark:border-[#333]">
             <div className="flex flex-col p-6 sm:p-10 relative">
-              {user.username !== username ?
+              {user && user.username !== username ?
                 <button onClick={handleClickFollow} className="absolute m-6 sm:m-10 bottom-0 right-0 text-gray-900 bg-white text-sm sm:text-lg border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-full px-8 py-2 dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-[#111]">
                   {getFollowing()}
                 </button> : null}
               <div className="relative inline-flex items-center justify-center w-32 h-32  bg-gray-100 border border-[#dbdbdb] rounded-full dark:bg-[#111] dark:border-[#333]">
                 <span className="text-2xl text-gray-600 dark:text-white">{requestedUser.email[0].toUpperCase()}</span>
-                {user.username === username ?
+                {user && user.username === username ?
                   <span className="flex absolute h-3 w-3 bottom-3 right-3">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>

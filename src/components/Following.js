@@ -53,28 +53,39 @@ const Following = () => {
     return () => unsubscribe()
   }, [pathname, setRequestedUserFollowers, setRequestedUserFollowing])
 
-  const handleClickFollow = async (username) => {
-
-    const q = query(collection(db, "users"), where("username", "==", username))
-    const querySnapshot = await getDocs(q)
-    let id = null
-    querySnapshot.forEach((doc) => {
-      id = doc.id
-    })
-    const requestedUserRef = doc(db, 'following', id)
-    const loggedInUserRef = doc(db, 'following', user.uid)
-
-    if (userFollowing.includes(username)) {
-      // delete user in requested user followers
-      updateDoc(requestedUserRef, { followers: arrayRemove(user.username) })
-      // delete user in logged in user following
-      updateDoc(loggedInUserRef, { following: arrayRemove(username) })
+  const handleClickFollow = async (e, username) => {
+    e.stopPropagation()
+    if (!user) {
+      navigate('/siginin')
     } else {
-      // add user in requested user followers
-      updateDoc(requestedUserRef, { followers: arrayUnion(user.username) })
-      // add user in logged in user following
-      updateDoc(loggedInUserRef, { following: arrayUnion(username) })
+      const q = query(collection(db, "users"), where("username", "==", username))
+      const querySnapshot = await getDocs(q)
+      let id = null
+      querySnapshot.forEach((doc) => {
+        id = doc.id
+      })
+      const requestedUserRef = doc(db, 'following', id)
+      const loggedInUserRef = doc(db, 'following', user.uid)
+  
+      if (userFollowing.includes(username)) {
+        // delete user in requested user followers
+        updateDoc(requestedUserRef, { followers: arrayRemove(user.username) })
+        // delete user in logged in user following
+        updateDoc(loggedInUserRef, { following: arrayRemove(username) })
+      } else {
+        // add user in requested user followers
+        updateDoc(requestedUserRef, { followers: arrayUnion(user.username) })
+        // add user in logged in user following
+        updateDoc(loggedInUserRef, { following: arrayUnion(username) })
+      }
     }
+  }
+
+  const handleClickUser = (e, username) => {
+    e.stopPropagation()
+    setRequestedUserFollowers(null)
+    setRequestedUserFollowing(null)
+    navigate(`/p/${username}`)
   }
 
   if (!userFollowing || !requestedUserFollowing || !requestedUserFollowing) return null
@@ -88,7 +99,7 @@ const Following = () => {
           </div>
           {users && users[`${route}`].map((username, i) => {
             return (
-              <div onClick={() => navigate(`/p/${username}`)} key={i} className='relative w-full max-w-xl p-6 mb-4 bg-white border border-[#dbdbdb] rounded-lg hover:cursor-pointer dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-black/50'>
+              <div onClick={(e) => handleClickUser(e, username)} key={i} className='relative w-full max-w-xl p-6 mb-4 bg-white border border-[#dbdbdb] rounded-lg hover:cursor-pointer dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-black/50'>
                 <div className='flex justify-between'>
                   <div>
                     <div className="min-w-[48px] mr-6 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-100 border border-gray-200 rounded-full dark:bg-[#111] dark:border-[#333]">
@@ -96,7 +107,7 @@ const Following = () => {
                     </div>
                     <span className='text-sm sm:text-base'>@{username}</span>
                   </div>
-                  <button onClick={() => handleClickFollow(username)} className='flex items-center justify-center text-gray-900 bg-white text-sm sm:text-md border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-full px-8 py-2 dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-[#111]'>
+                  <button onClick={(e) => handleClickFollow(e, username)} className='flex items-center justify-center text-gray-900 bg-white text-sm sm:text-md border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-full px-8 py-2 dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-[#111]'>
                     {userFollowing.includes(username) ? 'Unfollow' : 'Follow'}
                   </button>
                 </div>

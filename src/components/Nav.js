@@ -1,20 +1,25 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { usePost } from '../context/PostContext'
 
 const Nav = () => {
   const { user, theme, handleThemeSwitch } = useAuth()
   const { showModal, setShowModal, setCurrentPost } = usePost()
+  const navigate = useNavigate()
 
   const handleCreatePost = () => {
-    setCurrentPost(null)
-    setShowModal(!showModal)
+    if (!user) {
+      navigate('/siginin')
+    } else {
+      setCurrentPost(null)
+      setShowModal(!showModal)
+    }
   }
 
   return (
     <nav className="bg-white px-4 py-2.5 sm:py-2 fixed w-full z-20 top-0 left-0 border-b border-[#dbdbdb] dark:border-[#333] dark:bg-[#111]">
       <div className="container flex flex-wrap items-center justify-between mx-auto max-w-xl">
-        <Link to={`/p/${user.username}`} className="flex items-center">
+        <Link to={user ? `/p/${user.username}` : '/'} className="flex items-center">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-[#FA1A7F]">
             <path fillRule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z" clipRule="evenodd" />
           </svg>
@@ -41,7 +46,7 @@ const Nav = () => {
         </div>
         <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
           <ul className="hover:bg-red flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-white md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-[#111] md:dark:bg-[#111] dark:border-gray-700">
-            <Link to={`/p/${user.username}`}>
+            <Link to={user ? `/p/${user.username}` : '/'}>
               <button className="block py-2 pl-3 pr-4 text-black rounded md:bg-transparent md:p-0 dark:text-white" aria-current="page">Home</button>
             </Link>
             <Link to='/account'>
