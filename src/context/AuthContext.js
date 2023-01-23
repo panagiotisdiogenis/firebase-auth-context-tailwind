@@ -27,6 +27,12 @@ export const AuthContextProvider = ({ children }) => {
           email: userCredential.user.email,
           username
         })
+        const followRef = doc(db, 'following', userCredential.user.uid)
+        await setDoc(followRef, {
+          username,
+          followers: [],
+          following: []
+        })
       })
   }
 

@@ -98,7 +98,10 @@ const Post = ({ post }) => {
   const handleClickPost = (e) => {
     e.stopPropagation()
     setCurrentPost(post)
-    navigate(`/p/${post.username}/${post.id}`)
+    // handles RRv6 bug clicking back button multiple times
+    if (!currentPost || currentPost.id !== post.id) {
+      navigate(`/p/${post.username}/${post.id}`)
+    }
   }
 
   return (
