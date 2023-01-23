@@ -50,7 +50,7 @@ const Status = () => {
         <div className='flex flex-col items-center px-4 py-6'>
           <div className='max-w-xl w-full'>
           </div>
-          <Post post={currentPost} key={currentPost.id} />
+          <Post post={currentPost} key={currentPost.id} highlightedPost={true} />
           {comments ? comments.map((post) => <Post post={post} key={post.id} />) : null}
         </div>
         {showModal ? <Modal /> : null}

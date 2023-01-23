@@ -4,14 +4,13 @@ import { usePost } from '../context/PostContext'
 
 const Nav = () => {
   const { user, theme, handleThemeSwitch } = useAuth()
-  const { showModal, setShowModal, setCurrentPost } = usePost()
+  const { showModal, setShowModal } = usePost()
   const navigate = useNavigate()
 
   const handleCreatePost = () => {
     if (!user) {
       navigate('/siginin')
     } else {
-      setCurrentPost(null)
       setShowModal(!showModal)
     }
   }

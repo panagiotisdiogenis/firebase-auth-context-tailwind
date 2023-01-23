@@ -20,7 +20,7 @@ const timeSince = (date) => {
   return Math.floor(seconds) + 's'
 }
 
-const Post = ({ post }) => {
+const Post = ({ post, highlightedPost }) => {
   const { user } = useAuth()
   const navigate = useNavigate()
   let liked = user ? post.likedBy[`${user.uid}`] : false
@@ -99,7 +99,7 @@ const Post = ({ post }) => {
     e.stopPropagation()
     setCurrentPost(post)
     // handles RRv6 bug clicking back button multiple times
-    if (!currentPost || currentPost.id !== post.id) {
+    if (!highlightedPost) {
       navigate(`/p/${post.username}/${post.id}`)
     }
   }
@@ -127,7 +127,7 @@ const Post = ({ post }) => {
               <p className='text-[15px] text-zinc-600 inline font-medium dark:text-zinc-500'>{post.email} · </p>
               <p className='text-[15px] text-zinc-600 inline font-medium dark:text-zinc-500'>{timeSince(post.createdAt)}</p>
             </div>
-            {post.text ? <p className={`pt-2 ${currentPost && currentPost.id === post.id ? 'text-2xl' : 'text-[15px'} text-slate-900 dark:text-white`}>{post.text} </p> : null}
+            {post.text ? <p className={`pt-2 ${highlightedPost ? 'text-2xl' : 'text-[15px'} text-slate-900 dark:text-white`}>{post.text} </p> : null}
             {post.image ? <img src={post.image} className='mt-4 rounded-lg w-full' alt='upload' /> : null}
             <div className='mt-4'>
               <span className='group' onClick={(e) => handleClickLike(e)}>
