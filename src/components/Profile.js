@@ -76,6 +76,7 @@ const Profile = () => {
 
   // fetch first batch of posts
   useEffect(() => {
+    setLoading(true)
     const ref = collection(db, 'posts')
     const q = query(ref, where('username', '==', username), where('postID', '==', null), orderBy('createdAt', "desc"), limit(10))
     const unsubscribe = onSnapshot(q, snapshot => {
@@ -83,6 +84,7 @@ const Profile = () => {
       let last = snapshot.docs[snapshot.docs.length - 1]
       setLastKey(last)
       setPosts(snap)
+      setLoading(false)
     })
 
     return () => unsubscribe()

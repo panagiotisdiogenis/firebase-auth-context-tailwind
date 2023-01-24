@@ -11,6 +11,7 @@ import Signin from './components/Signin'
 import Signup from './components/Signup'
 import Status from './components/Status'
 import Following from './components/Following'
+import Feed from './components/Feed'
 // import Nav from './components/Nav'
 
 function App() {
@@ -26,6 +27,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Account />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path='feed'
+              element={
+                <ProtectedRoute>
+                  <Feed />
                 </ProtectedRoute>
               }
             />

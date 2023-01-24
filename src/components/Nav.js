@@ -1,11 +1,13 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { usePost } from '../context/PostContext'
 
 const Nav = () => {
   const { user } = useAuth()
-  const { showModal, setShowModal, setCreatePostOrigin } = usePost()
+  const { showModal, setShowModal, setCreatePostOrigin, setPosts } = usePost()
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+  let route = pathname.split('/')
 
   const handleCreatePost = (e) => {
     if (!user) {
@@ -13,6 +15,18 @@ const Nav = () => {
     } else {
       setShowModal(!showModal)
       setCreatePostOrigin(e.target.id)
+    }
+  }
+  const handleClickNavLinkHome = () => {
+    if (route[1] !== 'feed') {
+      setPosts([])
+      navigate(`${user ? '/feed' : 'signin'}`)
+    }
+  }
+  const handleClickNavLinkProfile = () => {
+    if (route[1] !== 'p') {
+      setPosts([])
+      navigate(`${user ? `/p/${user.username}` : 'signin'}`)
     }
   }
 
@@ -25,11 +39,10 @@ const Nav = () => {
           </svg>
         </Link>
         <ul className="hidden sm:flex hover:bg-red flex flex-col p-4 pl-0 mt-4 border border-gray-100 rounded-lg bg-white md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-[#111] md:dark:bg-[#111] dark:border-gray-700">
-          <Link to={user ? `/p/${user.username}` : '/'}>
-            <button className="block py-2 pl-3 pr-4 text-black rounded md:bg-transparent md:p-0 dark:text-white" aria-current="page">Home</button>
-          </Link>
+          <button onClick={handleClickNavLinkHome} className="block py-2 pl-3 pr-4 text-black rounded md:bg-transparent md:p-0 dark:text-white" aria-current="page">Home</button>
+          <button onClick={handleClickNavLinkProfile} className="block py-2 pl-3 pr-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Profile</button>
           <Link to='/account'>
-            <button className="block py-2 pl-3 pr-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Account</button>
+            <button className="block py-2 pl-3 pr-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Settings</button>
           </Link>
         </ul>
         <div className="flex md:order-2">
