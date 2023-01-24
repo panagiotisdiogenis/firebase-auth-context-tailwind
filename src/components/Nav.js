@@ -24,10 +24,10 @@ const Nav = () => {
     }
   }
   const handleClickNavLinkProfile = () => {
-    if (route[1] !== 'p') {
-      setPosts([])
+    // if (route[1] !== 'p') {
+      // setPosts([])
       navigate(`${user ? `/p/${user.username}` : 'signin'}`)
-    }
+    // }
   }
 
   return (
