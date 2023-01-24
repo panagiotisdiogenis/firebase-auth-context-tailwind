@@ -27,7 +27,8 @@ const Profile = () => {
     setShowModal,
     setCurrentPost,
     requestedUser,
-    setRequestedUser
+    setRequestedUser,
+    setCreatePostOrigin
   } = usePost()
   const {
     requestedUserFollowers,
@@ -51,6 +52,7 @@ const Profile = () => {
   // validate if the user in the url requested exists, otherwise redirect to /404
   useEffect(() => {
     setCurrentPost(null)
+    setCreatePostOrigin(null)
     const ref = collection(db, 'users')
     const q = query(ref, where('username', '==', username))
     const unsubscribeUser = onSnapshot(q, snapshot => {
@@ -59,7 +61,7 @@ const Profile = () => {
       setRequestedUser(snap)
     })
     return () => unsubscribeUser()
-  }, [username, navigate, setRequestedUser, setCurrentPost, setRequestedUserFollowing, setRequestedUserFollowers])
+  }, [username, navigate, setRequestedUser, setCurrentPost, setRequestedUserFollowing, setRequestedUserFollowers, setCreatePostOrigin])
 
   useEffect(() => {
     const ref = collection(db, 'following')

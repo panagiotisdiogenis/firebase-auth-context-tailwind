@@ -4,15 +4,15 @@ import { usePost } from '../context/PostContext'
 
 const Nav = () => {
   const { user } = useAuth()
-  const { showModal, setShowModal } = usePost()
+  const { showModal, setShowModal, setCreatePostOrigin } = usePost()
   const navigate = useNavigate()
 
   const handleCreatePost = (e) => {
-    console.log(e.target.id)
     if (!user) {
       navigate('/siginin')
     } else {
       setShowModal(!showModal)
+      setCreatePostOrigin(e.target.id)
     }
   }
 

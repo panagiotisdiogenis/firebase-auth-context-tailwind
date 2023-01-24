@@ -25,7 +25,7 @@ const Post = ({ post, highlightedPost }) => {
   const navigate = useNavigate()
   let liked = user ? post.likedBy[`${user.uid}`] : false
   let star = user ? post.star : false
-  const { showModal, setShowModal, currentPost, setCurrentPost } = usePost()
+  const { showModal, setShowModal, currentPost, setCurrentPost, setCreatePostOrigin } = usePost()
   const [comments, setComments] = useState([])
   const [verified, setVerified] = useState(false)
 
@@ -91,6 +91,7 @@ const Post = ({ post, highlightedPost }) => {
     e.stopPropagation()
     if (user) {
       setCurrentPost(post)
+      setCreatePostOrigin(null)
       setShowModal(!showModal)
     }
   }

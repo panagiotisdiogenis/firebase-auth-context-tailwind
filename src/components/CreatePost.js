@@ -21,7 +21,8 @@ const CreatePost = () => {
     setImageUpload,
     text,
     setText,
-    currentPost
+    currentPost,
+    createPostOrigin
   } = usePost()
 
   const [url, setUrl] = useState('')
@@ -43,7 +44,7 @@ const CreatePost = () => {
         createdAt: new Date()
       }
 
-      newPost['postID'] = currentPost ? currentPost.id : null
+      newPost['postID'] = currentPost && createPostOrigin !== 'nav' ? currentPost.id : null
 
       setShowModal(false)
 

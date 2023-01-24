@@ -12,6 +12,8 @@ export const PostContextProvider = ({ children }) => {
   const [requestedUser, setRequestedUser] = useState()
   const [text, setText] = useState('')
 
+  const [createPostOrigin, setCreatePostOrigin] = useState()
+  
   return (
     <PostContext.Provider value={{
       imageUpload,
@@ -29,7 +31,9 @@ export const PostContextProvider = ({ children }) => {
       requestedUser,
       setRequestedUser,
       text,
-      setText
+      setText,
+      createPostOrigin,
+      setCreatePostOrigin
     }}>
       {children}
     </PostContext.Provider>
