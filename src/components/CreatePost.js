@@ -11,7 +11,7 @@ import {
 import { storage } from "../firebase"
 import { v4 } from 'uuid'
 
-const CreatePost = ({ postID }) => {
+const CreatePost = () => {
   const { user } = useAuth()
   const hiddenFileInput = useRef()
   const postsRef = collection(db, 'posts')
@@ -43,9 +43,7 @@ const CreatePost = ({ postID }) => {
         createdAt: new Date()
       }
 
-      if (postID) {
-        newPost['postID'] = postID
-      }
+      newPost['postID'] = currentPost ? currentPost.id : null
 
       setShowModal(false)
 
@@ -54,7 +52,7 @@ const CreatePost = ({ postID }) => {
           setText('')
           setImageUpload('')
           setUrl('')
-          hiddenFileInput.current.value = ''
+          if (hiddenFileInput.current) hiddenFileInput.current.value = ''
         })
         .catch((err) => console.log(err))
 
@@ -76,7 +74,7 @@ const CreatePost = ({ postID }) => {
   const handleRemoveImageUpload = () => {
     setImageUpload('')
     setUrl('')
-    hiddenFileInput.current.value = ''
+    if (hiddenFileInput.current) hiddenFileInput.current.value = ''
   }
 
   return (

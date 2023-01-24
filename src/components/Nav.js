@@ -7,7 +7,8 @@ const Nav = () => {
   const { showModal, setShowModal } = usePost()
   const navigate = useNavigate()
 
-  const handleCreatePost = () => {
+  const handleCreatePost = (e) => {
+    console.log(e.target.id)
     if (!user) {
       navigate('/siginin')
     } else {
@@ -38,7 +39,7 @@ const Nav = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
           </Link>
-          <button onClick={handleCreatePost} type="button" className="hidden sm:flex text-black bg-white hover:bg-gray-100 font-medium rounded-full text-sm px-5 py-2 text-center mr-3 md:mr-0 border dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-[#111]">Create</button>
+          <button id="nav" onClick={(e) => handleCreatePost(e)} type="button" className="hidden sm:flex text-black bg-white hover:bg-gray-100 font-medium rounded-full text-sm px-5 py-2 text-center mr-3 md:mr-0 border dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-[#111]">Create</button>
         </div>
         <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
         </div>

@@ -3,7 +3,6 @@ import { useAuth } from '../context/AuthContext'
 import { usePost } from '../context/PostContext'
 
 const Account = () => {
-
   const navigate = useNavigate()
   const { user, logout, setUser, handleThemeSwitch, theme } = useAuth()
   const { setPosts } = usePost()
@@ -23,7 +22,7 @@ const Account = () => {
   return (
     <section className="bg-gray-50 dark:bg-[#111]">
       <div className='flex flex-col items-center justify-center px-4 mx-auto h-screen'>
-        <div className="w-full max-w-sm bg-white border border-[#dbdbdb] rounded-xl dark:bg-black dark:border-[#333]">
+        <div className="w-full max-w-lg bg-white border border-[#dbdbdb] rounded-xl dark:bg-black dark:border-[#333]">
           <div className="flex flex-col items-center p-10 rounded-xl dark:bg-black">
             <div className="relative inline-flex items-center justify-center w-32 h-32 overflow-hidden bg-gray-100 border border-[#dbdbdb] rounded-full dark:bg-[#111] dark:border-[#333]">
               <span className="text-xl text-gray-600 dark:text-white">{user.username[0].toUpperCase()}</span>
