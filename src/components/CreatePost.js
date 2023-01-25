@@ -81,11 +81,16 @@ const CreatePost = () => {
   return (
     <form className='w-full max-w-xl mb-4'>
       <div className="border border-[#dbdbdb] rounded-xl bg-gray-50 dark:bg-black dark:border-[#333]">
-        <div className="p-6 sm:p-8 pb-0 bg-white rounded-t-xl dark:bg-black">
+        <div className="p-6 sm:p-8 pb-0 sm:pb-0 bg-white rounded-t-xl dark:bg-black">
           <label htmlFor="comment" className="sr-only">Your comment</label>
-          <textarea id="comment" autoFocus maxLength="280" value={text} onChange={(e) => setText(e.target.value)} rows="4" className="w-full p-4 outline-none resize-none text-xl text-gray-900 bg-white border-0 focus:ring-0 dark:bg-black dark:text-white placeholder-[#71767B]" placeholder={`${currentPost ? 'Add a comment...' : "What's happening?"}`} required></textarea>
+          <div className='flex'>
+            <div class="min-w-[48px] mr-6 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-100 border border-gray-200 rounded-full dark:bg-[#111] dark:border-[#333]">
+              <span class="text-lg text-gray-600 dark:text-white">{user.username[0].toUpperCase()}</span>
+            </div>
+            <textarea id="comment" autoFocus maxLength="280" value={text} onChange={(e) => setText(e.target.value)} rows="6" className="w-full p-0 pr-4 outline-none resize-none text-xl text-gray-900 bg-white border-0 focus:ring-0 dark:bg-black dark:text-white placeholder-[#71767B]" placeholder={`${currentPost ? 'Add a comment...' : "What's happening?"}`} required></textarea>
+          </div>
           <div className='overflow-y-scroll max-h-64 rounded-xl'>
-            {imageUpload ? <img src={URL.createObjectURL(imageUpload)} className='w-full rounded-xl' alt='preview' /> : null}
+            {imageUpload ? <img src={URL.createObjectURL(imageUpload)} className='w-full rounded-xl ml-12' alt='preview' /> : null}
           </div>
         </div>
         <div className="flex items-center justify-between bg-white rounded-xl p-6 sm:p-8 border-[#dbdbdb] dark:bg-black dark:border-[#333]">
