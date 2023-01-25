@@ -37,9 +37,15 @@ const Feed = () => {
     const q = query(ref, where('username', '==', user.username))
     const unsubscribe = onSnapshot(q, snapshot => {
       const snap = snapshot.docs.map(doc => ({ ...doc.data(), uid: doc.id }))[0]
-      setUserFollowing(snap.following)
+      // if (snap.following.length === 0) setLoading(false)
+      let seed = ['user1', 'user2', 'user3']
+      if (snap.following.length === 0) {
+        setUserFollowing(seed)
+      } else {
+        setUserFollowing(snap.following)
+      }
       const ref = collection(db, 'posts')
-      const q = query(ref, where('username', 'in', snap.following), where('postID', '==', null), orderBy('createdAt', "desc"), limit(10))
+      const q = query(ref, where('username', 'in', snap.following.length === 0 ? seed : snap.following), where('postID', '==', null), orderBy('createdAt', "desc"), limit(10))
       const unsubscribe2 = onSnapshot(q, snapshot => {
         const snap = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }))
         let last = snapshot.docs[snapshot.docs.length - 1]
@@ -102,6 +108,9 @@ const Feed = () => {
           </div>
           :
           <div className='flex flex-col items-center px-4 py-6'>
+            <div className='flex relative w-full max-w-xl'>
+              <div className='text-white text-xl font-bold mb-4 text-left'>For You</div>
+            </div>
             {posts.length !== 0 ? posts.map((post) => <Post post={post} key={post.id} />) : null}
             <div className='m-4'>
               {nextPostsLoading ?
