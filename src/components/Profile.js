@@ -137,7 +137,7 @@ const Profile = () => {
     }
   }
 
-  if (!requestedUser || !requestedUserFollowing || !requestedUserFollowing) return null
+  // if (!requestedUser || !requestedUserFollowing || !requestedUserFollowing) return null
 
   return (
     <>
@@ -153,7 +153,7 @@ const Profile = () => {
         : null}
       <div className='hidden'>{posts.map((post) => <img alt='' key={post.id} src={post.image} onLoad={() => setCount(prev => prev + 1)} />)}</div>
       <div className="mx-auto mt-[50px] sm:mt-[70px] bg-gray-50 h-auto dark:bg-[#111]">
-        {loading ?
+        {loading || (!requestedUser || !requestedUserFollowing || !requestedUserFollowing) ?
           <div className='mx-auto mt-32 flex items-center justify-center'>
             <Loader />
           </div>
