@@ -50,6 +50,15 @@ const Status = () => {
         <div className='flex flex-col items-center px-4 py-6'>
           <div className='max-w-xl w-full'>
           </div>
+          <div className='flex items-center justify-center relative mb-4 h-[40px] w-full max-w-xl'>
+            <button onClick={() => navigate(-1)} className="absolute top-0 left-0 mr-4 text-gray-900 bg-white text-sm border border-gray-300 focus:outline-none hover:bg-gray-100 rounded-full p-3 py-2 dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-[#111] dark:focus:ring-0">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5 inline">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+              </svg>
+              <span className='ml-2 inline text-black dark:text-white'>Back</span>
+            </button>
+            <div className='mx-auto  text-slate-900 dark:text-white text-xl font-bold text-center'>Post</div>
+          </div>
           <Post post={currentPost} key={currentPost.id} highlightedPost={true} />
           {comments ? comments.map((post) => <Post post={post} key={post.id} />) : null}
         </div>

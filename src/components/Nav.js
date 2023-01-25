@@ -34,12 +34,10 @@ const Nav = () => {
             <path fillRule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z" clipRule="evenodd" />
           </svg>
         </Link>
-        <ul className="hidden sm:flex hover:bg-red flex flex-col p-4 pl-0 mt-4 border border-gray-100 rounded-lg bg-white md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-[#111] md:dark:bg-[#111] dark:border-gray-700">
-          <button onClick={handleClickNavLinkHome} className="block py-2 pl-3 pr-4 text-black rounded md:bg-transparent md:p-0 dark:text-white" aria-current="page">Home</button>
-          <button onClick={handleClickNavLinkProfile} className="block py-2 pl-3 pr-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Profile</button>
-          <Link to='/account'>
-            <button className="block py-2 pl-3 pr-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Settings</button>
-          </Link>
+        <ul className="hidden sm:flex border border-gray-100 rounded-lg flex-row space-x-8 text-sm font-medium border-0 bg-white dark:bg-[#111] md:dark:bg-[#111] dark:border-gray-700">
+          <button onClick={handleClickNavLinkHome} className={`block py-4 text-black rounded md:bg-transparent dark:text-white ${route[1] === 'feed' ? 'underline underline-offset-8' : ''}`} aria-current="page">Home</button>
+          <button onClick={handleClickNavLinkProfile} className={`block py-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ${route[1] === 'p' && route[3] === undefined ? 'underline underline-offset-8' : ''}`}>Profile</button>
+          <button onClick={() => navigate('/account')} className="block py-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Settings</button>
         </ul>
         <div className="flex md:order-2">
           <Link to='/account' className="flex items-center sm:hidden">

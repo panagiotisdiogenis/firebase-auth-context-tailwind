@@ -119,7 +119,7 @@ const Following = () => {
       <div className="mx-auto mt-[50px] sm:mt-[70px] bg-gray-50 h-auto h-full dark:bg-[#111]">
         <div className='flex flex-col items-center px-4 py-6'>
           <div className='max-w-xl w-full'>
-            {users && users[`${route}`].length !== 0 ? <div className='text-white text-lg font-bold mb-4'>{`${route.charAt(0).toUpperCase() + route.slice(1)}`}</div> : null}
+            {users && users[`${route}`].length !== 0 ? <div className='text-slate-900 dark:text-white text-lg font-bold mb-4'>{`${route.charAt(0).toUpperCase() + route.slice(1)}`}</div> : null}
             {users && users[`${route}`].map((username, i) => {
               return (
                 <div onClick={(e) => handleClickUser(e, username)} key={i} className='relative w-full max-w-xl p-6 mb-4 bg-white border border-[#dbdbdb] rounded-lg hover:cursor-pointer dark:bg-black dark:border-[#333] dark:text-white dark:hover:bg-black/50'>
@@ -137,7 +137,7 @@ const Following = () => {
                 </div>
               )
             })}
-            <div className='text-white text-lg font-bold mb-4'>Suggestions</div>
+            <div className='text-slate-900 dark:text-white text-lg font-bold mb-4'>Suggestions</div>
             {['user1', 'user2', 'user3'].map((username) => renderSuggestions(username))}
           </div>
         </div>

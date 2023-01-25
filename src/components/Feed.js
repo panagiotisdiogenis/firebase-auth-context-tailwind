@@ -109,7 +109,7 @@ const Feed = () => {
           :
           <div className='flex flex-col items-center px-4 py-6'>
             <div className='flex relative w-full max-w-xl'>
-              <div className='text-white text-xl font-bold mb-4 text-left'>For You</div>
+              <div className='text-slate-900 dark:text-white text-xl font-bold mb-4 text-left'>For You</div>
             </div>
             {posts.length !== 0 ? posts.map((post) => <Post post={post} key={post.id} />) : null}
             <div className='m-4'>
