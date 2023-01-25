@@ -31,6 +31,9 @@ const Following = () => {
   }, [requestedUserFollowing, requestedUserFollowers, route])
 
   useEffect(() => {
+    if (!user) {
+      navigate('/siginin')
+    } 
     const ref = collection(db, 'following')
     const q = query(ref, where('username', '==', user.username))
     const unsubscribe = onSnapshot(q, snapshot => {
@@ -39,7 +42,7 @@ const Following = () => {
       setUserFollowing(snap.following)
     })
     return () => unsubscribe()
-  }, [user.username, setUserFollowers, setUserFollowing])
+  }, [user, navigate, setUserFollowers, setUserFollowing])
 
   useEffect(() => {
     const requestedUsername = pathname.split('/')[2]
