@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { usePost } from '../context/PostContext'
 import { db } from '../firebase'
@@ -23,10 +23,9 @@ const timeSince = (date) => {
 const Post = ({ post, highlightedPost }) => {
   const { user } = useAuth()
   const navigate = useNavigate()
-  const { username } = useParams()
   let liked = user ? post.likedBy[`${user.uid}`] : false
   let star = user ? post.star : false
-  const { showModal, setShowModal, currentPost, setCurrentPost, setCreatePostOrigin, setPosts } = usePost()
+  const { showModal, setShowModal, currentPost, setCurrentPost, setCreatePostOrigin } = usePost()
   const [comments, setComments] = useState([])
   const [verified, setVerified] = useState(false)
 
@@ -108,10 +107,7 @@ const Post = ({ post, highlightedPost }) => {
 
   const handleClickUsername = (e, userClicked) => {
     e.stopPropagation()
-    if (username !== userClicked) {
-      setPosts([])
-      navigate(`/p/${userClicked}`)
-    }
+    navigate(`/p/${userClicked}`)
   }
 
   return (

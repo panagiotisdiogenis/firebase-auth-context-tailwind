@@ -4,7 +4,7 @@ import { usePost } from '../context/PostContext'
 
 const Nav = () => {
   const { user } = useAuth()
-  const { showModal, setShowModal, setCreatePostOrigin, setPosts } = usePost()
+  const { showModal, setShowModal, setCreatePostOrigin } = usePost()
   const navigate = useNavigate()
   const { pathname } = useLocation()
   let route = pathname.split('/')
@@ -19,15 +19,11 @@ const Nav = () => {
   }
   const handleClickNavLinkHome = () => {
     if (route[1] !== 'feed') {
-      setPosts([])
       navigate(`${user ? '/feed' : 'signin'}`)
     }
   }
   const handleClickNavLinkProfile = () => {
-    // if (route[1] !== 'p') {
-      // setPosts([])
-      navigate(`${user ? `/p/${user.username}` : 'signin'}`)
-    // }
+    navigate(`${user ? `/p/${user.username}` : 'signin'}`)
   }
 
   return (
