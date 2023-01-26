@@ -19,11 +19,11 @@ const Nav = () => {
   }
   const handleClickNavLinkHome = () => {
     if (route[1] !== 'feed') {
-      navigate(`${user ? '/feed' : 'signin'}`)
+      navigate(`${user ? '/feed' : '/signin'}`)
     }
   }
   const handleClickNavLinkProfile = () => {
-    navigate(`${user ? `/p/${user.username}` : 'signin'}`)
+    navigate(`${user ? `/p/${user.username}` : '/signin'}`)
   }
 
   return (

@@ -35,15 +35,16 @@ const Following = () => {
   useEffect(() => {
     if (!user) {
       navigate('/siginin')
+    } else {
+      const ref = collection(db, 'following')
+      const q = query(ref, where('username', '==', user.username))
+      const unsubscribe = onSnapshot(q, snapshot => {
+        const snap = snapshot.docs.map(doc => ({ ...doc.data(), uid: doc.id }))[0]
+        setUserFollowers(snap.followers)
+        setUserFollowing(snap.following)
+      })
+      return () => unsubscribe()
     }
-    const ref = collection(db, 'following')
-    const q = query(ref, where('username', '==', user.username))
-    const unsubscribe = onSnapshot(q, snapshot => {
-      const snap = snapshot.docs.map(doc => ({ ...doc.data(), uid: doc.id }))[0]
-      setUserFollowers(snap.followers)
-      setUserFollowing(snap.following)
-    })
-    return () => unsubscribe()
   }, [user, navigate, setUserFollowers, setUserFollowing])
 
   useEffect(() => {
