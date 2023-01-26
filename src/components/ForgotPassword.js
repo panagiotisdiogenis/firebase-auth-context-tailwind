@@ -43,11 +43,6 @@ const ForgotPassword = () => {
                 <span className="sr-only">Info</span>
                 <div>{message}</div>
               </div>}
-              {error && <div className="flex p-[10px] mb-4 text-sm text-red-700 bg-red-100 rounded-lg" role="alert">
-                <svg aria-hidden="true" className="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path></svg>
-                <span className="sr-only">Info</span>
-                <div>{error}</div>
-              </div>}
               <button type="submit" className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-0">
                 {loading ?
                   <svg aria-hidden="true" role="status" className="inline w-4 h-4 mr-3 text-white animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -56,6 +51,9 @@ const ForgotPassword = () => {
                   </svg>
                   : 'Reset Password'}
               </button>
+              {error && <div className="flex justify-center p-[10px] mb-4 text-sm text-rose-500 bg-white dark:bg-black rounded-lg" role="alert">
+                <div>{error}</div>
+              </div>}
               <p className="text-sm text-center font-light text-gray-500">
                 Have an account? <Link to='/signin' className='font-medium text-blue-600 hover:underline'>Sign in</Link>
               </p>
