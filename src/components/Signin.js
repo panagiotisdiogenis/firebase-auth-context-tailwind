@@ -58,9 +58,9 @@ const Signin = () => {
                   : 'Sign in'}
               </button>
               {error && <div className="flex justify-center p-[10px] mb-4 text-sm text-rose-500 bg-white dark:bg-black rounded-lg" role="alert">
-                  <div>{error}</div>
+                <div>{error}</div>
               </div>}
-              <p className="text-sm text-center font-light text-gray-500">
+              <p className="text-sm text-center text-gray-500">
                 Don’t have an account yet? <Link to='/signup' className='font-medium text-blue-600 hover:underline'>Sign up</Link>
               </p>
               <p className="text-center">

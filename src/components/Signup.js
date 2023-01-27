@@ -48,7 +48,7 @@ const Signup = () => {
               {error && <div className="flex justify-center p-[10px] mb-4 text-sm text-rose-500 bg-white dark:bg-black rounded-lg" role="alert">
                 <div>{error}</div>
               </div>}
-              <p className="text-sm text-center font-light text-gray-500">
+              <p className="text-sm text-center text-gray-500">
                 Have an account? <Link to='/signin' className='font-medium text-blue-600 hover:underline'>Sign in</Link>
               </p>
             </form>
