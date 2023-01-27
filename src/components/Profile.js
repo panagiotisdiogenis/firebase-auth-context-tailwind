@@ -182,11 +182,11 @@ const Profile = () => {
                   {getTimeJoined()}
                 </div>
                 <div className='mt-2'>
-                  <span onClick={() => navigate(`/p/${username}/following`)} className='text-white hover:underline underline-offset-4 decoration-1 cursor-pointer'>
+                  <span onClick={() => navigate(`/p/${username}/following`)} className='text-black dark:text-white hover:underline underline-offset-4 decoration-1 cursor-pointer'>
                     <span className="text-xs text-slate-900 font-bold dark:text-white">{requestedUserFollowing.following.length}</span>
                     <span className="text-sm text-zinc-600 dark:text-zinc-500 pr-2"> Following</span>
                   </span>
-                  <span onClick={() => navigate(`/p/${username}/followers`)} className='text-white hover:underline underline-offset-4 decoration-1 cursor-pointer'>
+                  <span onClick={() => navigate(`/p/${username}/followers`)} className='text-black dark:text-white hover:underline underline-offset-4 decoration-1 cursor-pointer'>
                     <span className="text-xs text-slate-900 font-bold dark:text-white">{requestedUserFollowers.followers.length}</span>
                     <span className="text-sm text-zinc-600 dark:text-zinc-500"> Followers </span>
                   </span>
