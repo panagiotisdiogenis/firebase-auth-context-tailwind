@@ -46,7 +46,7 @@ const Status = () => {
   return (
     <>
       <Nav />
-      <div className="mx-auto mt-[50px] sm:mt-[70px] bg-gray-50 h-auto h-full dark:bg-[#111]">
+      <div className="mx-auto mt-[63px] sm:mt-[70px] bg-gray-50 h-auto h-full dark:bg-[#111]">
         <div className='flex flex-col items-center px-4 py-6'>
           <div className='max-w-xl w-full'>
           </div>

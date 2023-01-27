@@ -84,8 +84,8 @@ const CreatePost = () => {
         <div className="p-6 sm:p-8 pb-0 sm:pb-0 bg-white rounded-t-xl dark:bg-black">
           <label htmlFor="comment" className="sr-only">Your comment</label>
           <div className='flex'>
-            <div class="min-w-[48px] mr-6 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-100 border border-gray-200 rounded-full dark:bg-[#111] dark:border-[#333]">
-              <span class="text-lg text-gray-600 dark:text-white">{user.username[0].toUpperCase()}</span>
+            <div className="min-w-[48px] mr-6 relative inline-flex items-center justify-center w-12 h-12 overflow-hidden bg-gray-100 border border-gray-200 rounded-full dark:bg-[#111] dark:border-[#333]">
+              <span className="text-lg text-gray-600 dark:text-white">{user.username[0].toUpperCase()}</span>
             </div>
             <textarea id="comment" autoFocus maxLength="280" value={text} onChange={(e) => setText(e.target.value)} rows="6" className="w-full p-0 pr-4 outline-none resize-none text-xl text-gray-900 bg-white border-0 focus:ring-0 dark:bg-black dark:text-white placeholder-[#71767B]" placeholder={`${currentPost ? 'Add a comment...' : "What's happening?"}`} required></textarea>
           </div>

@@ -11,8 +11,8 @@ export const PostContextProvider = ({ children }) => {
   const [nextPostsLoading, setNextPostsLoading] = useState(false)
   const [requestedUser, setRequestedUser] = useState()
   const [text, setText] = useState('')
-
   const [createPostOrigin, setCreatePostOrigin] = useState()
+  const [input, setInput] = useState('')
   
   return (
     <PostContext.Provider value={{
@@ -33,7 +33,9 @@ export const PostContextProvider = ({ children }) => {
       text,
       setText,
       createPostOrigin,
-      setCreatePostOrigin
+      setCreatePostOrigin,
+      input,
+      setInput
     }}>
       {children}
     </PostContext.Provider>

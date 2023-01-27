@@ -4,7 +4,7 @@ import { usePost } from '../context/PostContext'
 
 const Nav = () => {
   const { user } = useAuth()
-  const { showModal, setShowModal, setCreatePostOrigin } = usePost()
+  const { showModal, setShowModal, setCreatePostOrigin, input, setInput } = usePost()
   const navigate = useNavigate()
   const { pathname } = useLocation()
   let route = pathname.split('/')
@@ -26,6 +26,13 @@ const Nav = () => {
     navigate(`${user ? `/p/${user.username}` : '/signin'}`)
   }
 
+  const handleSubmitSearch = (e) => {
+    e.preventDefault()
+    if (input.length > 0) {
+      navigate('/search')
+    }
+  }
+
   return (
     <nav className="bg-white px-4 py-4 sm:py-2 fixed w-full z-20 top-0 left-0 border-b border-[#dbdbdb] dark:border-[#333] dark:bg-[#111]">
       <div className="container flex flex-wrap items-center justify-between mx-auto max-w-xl">
@@ -34,11 +41,26 @@ const Nav = () => {
             <path fillRule="evenodd" d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z" clipRule="evenodd" />
           </svg>
         </Link>
-        <ul className="hidden sm:flex border border-gray-100 rounded-lg flex-row space-x-8 text-sm font-medium border-0 bg-white dark:bg-[#111] md:dark:bg-[#111] dark:border-gray-700">
+        <ul className="hidden sm:flex mr-8 border border-gray-100 rounded-lg flex-row space-x-8 text-sm font-medium border-0 bg-white dark:bg-[#111] md:dark:bg-[#111] dark:border-gray-700">
           <button onClick={handleClickNavLinkHome} className={`block py-4 text-black rounded md:bg-transparent dark:text-white ${route[1] === 'feed' ? 'underline underline-offset-8' : ''}`} aria-current="page">Home</button>
           <button onClick={handleClickNavLinkProfile} className={`block py-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ${route[1] === 'p' && route[3] === undefined ? 'underline underline-offset-8' : ''}`}>Profile</button>
           <button onClick={() => navigate('/account')} className="block py-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Settings</button>
         </ul>
+        <form onSubmit={handleSubmitSearch} className='flex'>
+          <div className='relative'>
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4 text-black dark:text-white">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+              </svg>
+            </div>
+            <input
+              className="rounded-full w-[200px] bg-[#fafafa] border border-[#dbdbdb] dark:border-[#333] dark:bg-black text-black outline-none text-sm p-4 pl-10 h-[38px] placeholder-[#777] dark:text-white"
+              maxLength="20"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
+          </div>
+        </form>
         <div className="flex md:order-2">
           <Link to='/account' className="flex items-center sm:hidden">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-zinc-600 dark:bg-[#111] dark:text-white">

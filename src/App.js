@@ -12,6 +12,7 @@ import Signup from './components/Signup'
 import Status from './components/Status'
 import Following from './components/Following'
 import Feed from './components/Feed'
+import Search from './components/Search'
 // import Nav from './components/Nav'
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route caseSensitive path='search' element={<Search />} />
             <Route caseSensitive path='p/:username' element={<Profile />} />
             <Route caseSensitive path='p/:username/:postid' element={<Status />} />
             <Route caseSensitive path='p/:username/followers' element={<Following />} />

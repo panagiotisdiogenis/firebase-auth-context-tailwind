@@ -152,7 +152,7 @@ const Profile = () => {
         </div>
         : null}
       <div className='hidden'>{posts.map((post) => <img alt='' key={post.id} src={post.image} onLoad={() => setCount(prev => prev + 1)} />)}</div>
-      <div className="mx-auto mt-[50px] sm:mt-[70px] bg-gray-50 h-auto dark:bg-[#111]">
+      <div className="mx-auto mt-[63px] sm:mt-[70px] bg-gray-50 h-auto dark:bg-[#111]">
         {loading || (!requestedUser || !requestedUserFollowing || !requestedUserFollowing) ?
           <div className='mx-auto mt-32 flex items-center justify-center'>
             <Loader />
