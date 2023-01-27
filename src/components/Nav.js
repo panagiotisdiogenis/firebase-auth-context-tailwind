@@ -44,7 +44,7 @@ const Nav = () => {
         <ul className="hidden sm:flex mr-8 border border-gray-100 rounded-lg flex-row space-x-8 text-sm font-medium border-0 bg-white dark:bg-[#111] md:dark:bg-[#111] dark:border-gray-700">
           <button onClick={handleClickNavLinkHome} className={`block py-4 text-black rounded md:bg-transparent dark:text-white ${route[1] === 'feed' ? 'underline underline-offset-8' : ''}`} aria-current="page">Home</button>
           <button onClick={handleClickNavLinkProfile} className={`block py-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ${route[1] === 'p' && route[3] === undefined ? 'underline underline-offset-8' : ''}`}>Profile</button>
-          <button onClick={() => navigate('/account')} className="block py-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Settings</button>
+          <button onClick={() => navigate('/account')} className={`block py-4 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:dark:hover:text-white dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 ${route[1] === 'account' ? 'underline underline-offset-8' : ''}`}>Settings</button>
         </ul>
         <form onSubmit={handleSubmitSearch} className='flex'>
           <div className='relative'>
