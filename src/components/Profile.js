@@ -40,6 +40,7 @@ const Profile = () => {
   // validate if the user in the url requested exists, otherwise redirect to /404
   useEffect(() => {
     setLoading(true)
+    setPosts([])
     setRequestedUser(null)
     setCurrentPost(null)
     setCreatePostOrigin(null)
@@ -51,7 +52,7 @@ const Profile = () => {
       setRequestedUser(snap)
     })
     return () => unsubscribeUser()
-  }, [username, navigate, setRequestedUser, setCurrentPost, setRequestedUserFollowing, setRequestedUserFollowers, setCreatePostOrigin])
+  }, [username, navigate, setRequestedUser, setCurrentPost, setRequestedUserFollowing, setRequestedUserFollowers, setCreatePostOrigin, setPosts])
 
   useEffect(() => {
     const ref = collection(db, 'following')
@@ -136,8 +137,6 @@ const Profile = () => {
       setShowModal(!showModal)
     }
   }
-
-  // if (!requestedUser || !requestedUserFollowing || !requestedUserFollowing) return null
 
   return (
     <>
