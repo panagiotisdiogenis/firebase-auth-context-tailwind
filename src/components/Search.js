@@ -12,7 +12,7 @@ const Search = () => {
   const navigate = useNavigate()
   const { user } = useAuth()
   const { input } = usePost()
-  const { userFollowing } = useFollowing()
+  const { userFollowing, setUserFollowing } = useFollowing()
   const [loading, setLoading] = useState(true)
   const [people, setPeople] = useState([])
 
@@ -22,10 +22,26 @@ const Search = () => {
     const unsubscribeUser = onSnapshot(q, snapshot => {
       const snap = snapshot.docs.map(doc => ({ ...doc.data(), uid: doc.id }))
       setPeople(snap)
-      setLoading(false)
+      // setLoading(false)
     })
     return () => unsubscribeUser()
   }, [input, navigate])
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/signin')
+    } else {
+      const ref = collection(db, 'following')
+      const q = query(ref, where('username', '==', user.username))
+      const unsubscribe = onSnapshot(q, snapshot => {
+        const snap = snapshot.docs.map(doc => ({ ...doc.data(), uid: doc.id }))[0]
+        // setUserFollowers(snap.followers)
+        setUserFollowing(snap.following)
+        setLoading(false)
+      })
+      return () => unsubscribe()
+    }
+  }, [user, navigate, setUserFollowing])
 
   const handleClickFollow = async (e, username) => {
     e.stopPropagation()

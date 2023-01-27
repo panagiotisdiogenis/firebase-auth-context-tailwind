@@ -18,6 +18,8 @@ const Following = () => {
     requestedUserFollowing,
     setRequestedUserFollowers,
     setRequestedUserFollowing,
+    setUserFollowers,
+    setUserFollowing
   } = useFollowing()
   const [users, setUsers] = useState()
   const [loading, setLoading] = useState(true)
@@ -29,6 +31,21 @@ const Following = () => {
       setUsers(requestedUserFollowers)
     }
   }, [requestedUserFollowing, requestedUserFollowers, route])
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/signin')
+    } else {
+      const ref = collection(db, 'following')
+      const q = query(ref, where('username', '==', user.username))
+      const unsubscribe = onSnapshot(q, snapshot => {
+        const snap = snapshot.docs.map(doc => ({ ...doc.data(), uid: doc.id }))[0]
+        setUserFollowers(snap.followers)
+        setUserFollowing(snap.following)
+      })
+      return () => unsubscribe()
+    }
+  }, [user, navigate, setUserFollowers, setUserFollowing])
 
   useEffect(() => {
     const requestedUsername = pathname.split('/')[2]
